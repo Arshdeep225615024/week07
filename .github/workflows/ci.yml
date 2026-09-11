@@ -7,7 +7,6 @@ on:
       - main
 
 jobs:
-
   backend-test:
     name: Test ${{ matrix.service }}
     runs-on: ubuntu-latest
@@ -84,34 +83,35 @@ jobs:
 
 
   frontend-test:
-  name: Test frontend
-  runs-on: ubuntu-latest
+    name: Test frontend
+    runs-on: ubuntu-latest
 
-  env:
-    VITE_USER_SERVICE_URL: /api/users
-    VITE_STUDENT_SERVICE_URL: /api/students
-    VITE_LECTURER_SERVICE_URL: /api/lecturers
-    VITE_COURSE_SERVICE_URL: /api/courses
-    VITE_ENROLLMENT_SERVICE_URL: /api/enrollments
+    env:
+      VITE_USER_SERVICE_URL: /api/users
+      VITE_STUDENT_SERVICE_URL: /api/students
+      VITE_LECTURER_SERVICE_URL: /api/lecturers
+      VITE_COURSE_SERVICE_URL: /api/courses
+      VITE_ENROLLMENT_SERVICE_URL: /api/enrollments
 
-  steps:
-    - name: Checkout repository
-      uses: actions/checkout@v5
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: "22"
-        cache: npm
-        cache-dependency-path: frontend/package-lock.json
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
 
-    - name: Install frontend dependencies
-      working-directory: frontend
-      run: npm ci
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
 
-    - name: Run frontend tests
-      working-directory: frontend
-      run: npm run test:run
+      - name: Run frontend tests
+        working-directory: frontend
+        run: npm run test:run
+
 
   build-and-push:
     name: Build and Push ${{ matrix.image }}
